@@ -76,7 +76,7 @@ function displayProfile(profile, friends = []) {
 }
  
 // renderFriendsList — builds the friends list HTML in the centre panel.
-// Expects an array of { id, name } objects.
+// Expects an array of { id, name, picture } objects.
 function renderFriendsList(friends) {
   const box = document.getElementById("friends-list");
   box.innerHTML = "";
@@ -89,7 +89,19 @@ function renderFriendsList(friends) {
   friends.forEach((f) => {
     const div = document.createElement("div");
     div.className   = "friend-entry";
-    div.textContent = f.name;
+
+    const img = document.createElement("img");
+    img.className = "friend-avatar";
+    img.src = f.picture || DEFAULT_AVATAR;
+    img.alt = f.name;
+    // Fallback if the image URL is broken
+    img.onerror = () => { img.src = DEFAULT_AVATAR; };
+
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = f.name;
+    
+    div.appendChild(img);
+    div.appendChild(nameSpan);
     box.appendChild(div);
   });
 }
@@ -212,7 +224,7 @@ async function selectProfile(profileId) {
     if (friendIds.length > 0) {
       const { data: nameRows, error: nameError } = await db
         .from("profiles")
-        .select("id, name")
+        .select("id, name, picture") // ADDED picture TO QUERY
         .in("id", friendIds)
         .order("name", { ascending: true });
  

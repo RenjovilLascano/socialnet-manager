@@ -1,4 +1,3 @@
-/* css/style.css */
 /* ============================================================
    SocialNet Manager - Visual Design
    ============================================================ */
@@ -409,7 +408,10 @@ body {
 
 /* ── Friend entries ──────────────────────────────────────────── */
 .sn-textbox .friend-entry {
-  padding:       0.2rem 0;
+  display:       flex;
+  align-items:   center;
+  gap:           12px;
+  padding:       0.4rem 0;
   border-bottom: 1px solid #eef0f4;
   font-size:     0.85rem;
   color:         #2d3748;
@@ -417,6 +419,16 @@ body {
 
 .sn-textbox .friend-entry:last-child { border-bottom: none; }
 
+.friend-avatar {
+  width:         32px;
+  height:        32px;
+  border-radius: 50%;
+  object-fit:    cover;
+  box-shadow:    0 2px 4px rgba(0,0,0,0.06);
+  border:        1px solid #c8d4e8;
+  background:    #dde3ec;
+  flex-shrink:   0;
+}
 
 /* ── Status bar ──────────────────────────────────────────────── */
 #status-bar {
