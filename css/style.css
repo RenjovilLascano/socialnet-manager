@@ -1,29 +1,33 @@
 /* css/style.css */
 /* ============================================================
-   SocialNet Manager - Visual Design
+   SocialNet Manager - Visual Design (Purple Theme)
    ============================================================ */
-
 
 /* ── Variables ───────────────────────────────────────────────── */
 :root {
-  /* Sans-serif for headings (clean and simple) */
   /* Sans-serif for headings (clean and consistent UI look) */
   --font-heading: "Segoe UI", system-ui, -apple-system, "Inter", Roboto, "Helvetica Neue", Arial, sans-serif;
 
   /* Body font (modern, readable, with proper fallbacks) */
   --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", "Inter", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  --clr-header-bg:        #1e3a6e;
-  --clr-header-bg2:       #2d5299;
+  /* --- NEW PURPLE PALETTE --- */
+  --clr-primary:          #4c237a; /* Main brand color */
+  --clr-primary-hover:    #3a1a5e; /* Darker shade for hovers */
+  --clr-primary-light:    #eaddf6; /* Very light purple for active items/backgrounds */
+
+  --clr-header-bg:        #4c237a;
+  --clr-header-bg2:       #64319c; /* Slightly lighter gradient stop */
   --clr-header-text:      #ffffff;
 
-  --clr-page-bg:          #dde3ec;
-  --clr-panel-bg:         #f7f8fa;
-  --clr-panel-border:     #c8cdd8;
-  --clr-panel-shadow:     rgba(30, 58, 110, 0.10);
+  --clr-page-bg:          #f2f0f5; /* Subtle cool-gray/purple tint */
+  --clr-panel-bg:         #ffffff;
+  --clr-panel-border:     #d7cce3;
+  --clr-panel-shadow:     rgba(76, 35, 122, 0.10); /* Shadow tinted with primary */
 
-  --clr-blue:             #2456b4;
-  --clr-blue-hover:       #1a3f8c;
+  /* Button Colors - Retaining 'blue' naming so HTML classes don't break, but mapped to purple */
+  --clr-blue:             #4c237a; 
+  --clr-blue-hover:       #3a1a5e;
   --clr-red:              #b83030;
   --clr-red-hover:        #922424;
   --clr-green:            #1e8c4a;
@@ -34,16 +38,16 @@
   --clr-gray-hover:       #2d3748;
 
   --clr-textbox-bg:       #ffffff;
-  --clr-textbox-bdr:      #c0c7d4;
-  --clr-list-active:      #2456b4;
+  --clr-textbox-bdr:      #c9bddd;
+  --clr-list-active:      #4c237a;
   --clr-list-active-text: #ffffff;
 
-  --clr-status-bg:        #1a2e55;
+  --clr-status-bg:        #2d154a; /* Very dark purple for footer */
   --clr-status-text:      rgba(255, 255, 255, 0.88);
 
-  --clr-label:            #3a4560;
-  --clr-heading:          #111827;
-  --clr-subheading:       #1e3a6e;
+  --clr-label:            #3a2c4d; /* Tinted text */
+  --clr-heading:          #1b1325;
+  --clr-subheading:       #4c237a;
 
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -53,12 +57,10 @@
   --statusbar-h: 36px;
 }
 
-
 /* ── Box-sizing reset ────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
 }
-
 
 html {
   height: 100%;
@@ -74,7 +76,6 @@ body {
   flex-direction: column;
   overflow:       hidden;
 }
-
 
 /* ── Application header ──────────────────────────────────────── */
 #app-header {
@@ -100,7 +101,6 @@ body {
   text-shadow:    0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-
 #app-wrapper {
   height:         calc(100% - var(--header-h));
   flex-shrink:    0;
@@ -110,7 +110,6 @@ body {
   overflow:       hidden;
 }
 
-
 #main-content {
   height:      calc(100% - var(--statusbar-h));
   flex-shrink: 0;
@@ -119,23 +118,19 @@ body {
   padding:     0.75rem !important;
 }
 
-
 /* ── Bootstrap row ───────────────────────────────────────────── */
 #main-content > .row {
   height:     100%;
   min-height: 0;
 }
 
-
 /* ── Bootstrap columns ───────────────────────────────────────── */
 #main-content > .row > [class*="col-"] {
   display:        flex;
   flex-direction: column;
-  /* height: 100% anchors column to the row's concrete height */
   height:         100%;
   min-height:     0;
 }
-
 
 /* ── Panel cards ─────────────────────────────────────────────── */
 .sn-panel {
@@ -153,14 +148,11 @@ body {
 }
 
 .sn-panel--bordered {
-  border-color: #a8b4c8;
-  box-shadow:   0 4px 18px rgba(30, 58, 110, 0.13),
+  border-color: var(--clr-panel-border);
+  box-shadow:   0 4px 18px var(--clr-panel-shadow),
                 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
-/* Right panel scrolls internally so its tall form fields do not
-   push the column taller than the viewport, which would break
-   the left panel's scroll boundary. */
 .sn-panel.right-panel {
   overflow-y:      auto;
   scrollbar-width: thin;
@@ -172,7 +164,6 @@ body {
 .sn-panel.right-panel::-webkit-scrollbar-thumb       { background: #b0bac8; border-radius: 3px; }
 .sn-panel.right-panel::-webkit-scrollbar-thumb:hover { background: #8896a8; }
 
-
 /* ── Panel headings ──────────────────────────────────────────── */
 .panel-heading {
   font-family:    var(--font-body);
@@ -183,10 +174,9 @@ body {
   letter-spacing: 0.06em;
   margin-bottom:  0.65rem;
   padding-bottom: 0.5rem;
-  border-bottom:  2px solid #d0d8e8;
+  border-bottom:  2px solid var(--clr-panel-border);
   flex-shrink:    0;
 }
-
 
 /* ── Field labels ────────────────────────────────────────────── */
 .field-label {
@@ -197,7 +187,6 @@ body {
   margin-top:    0;
   flex-shrink:   0;
 }
-
 
 /* ── Text inputs ─────────────────────────────────────────────── */
 .sn-input {
@@ -215,12 +204,11 @@ body {
 
 .sn-input:focus {
   outline:      none;
-  border-color: var(--clr-blue);
-  box-shadow:   0 0 0 3px rgba(36, 86, 180, 0.18);
+  border-color: var(--clr-primary);
+  box-shadow:   0 0 0 3px rgba(76, 35, 122, 0.18);
 }
 
 .sn-input::placeholder { color: #9aa5b8; }
-
 
 /* ── Button rows ─────────────────────────────────────────────── */
 .btn-row {
@@ -228,7 +216,6 @@ body {
   gap:         0.4rem;
   flex-shrink: 0;
 }
-
 
 /* ── Buttons ─────────────────────────────────────────────────── */
 .btn {
@@ -245,9 +232,9 @@ body {
 }
 
 .btn:active        { transform: scale(0.97); }
-.btn:focus-visible { outline: 2px solid var(--clr-blue); outline-offset: 2px; }
+.btn:focus-visible { outline: 2px solid var(--clr-primary); outline-offset: 2px; }
 
-.sn-btn-blue         { background: var(--clr-blue);         color: #fff; box-shadow: 0 1px 4px rgba(36,86,180,0.25); }
+.sn-btn-blue         { background: var(--clr-blue);         color: #fff; box-shadow: 0 1px 4px rgba(76, 35, 122, 0.25); }
 .sn-btn-blue:hover   { background: var(--clr-blue-hover);   color: #fff; }
 .sn-btn-red          { background: var(--clr-red);          color: #fff; box-shadow: 0 1px 4px rgba(184,48,48,0.25); }
 .sn-btn-red:hover    { background: var(--clr-red-hover);    color: #fff; }
@@ -258,24 +245,7 @@ body {
 .sn-btn-gray         { background: var(--clr-gray);         color: #fff; box-shadow: 0 1px 4px rgba(74,85,104,0.25); }
 .sn-btn-gray:hover   { background: var(--clr-gray-hover);   color: #fff; }
 
-
-/* ── Profile list box ────────────────────────────────────────────
-
-   All three properties below must be present together:
-
-   flex: 1        Grows to fill remaining panel height after
-                  the heading, input, and button rows above it.
-
-   min-height: 0  Overrides the browser default of min-height: auto,
-                  which would otherwise let the box expand to fit
-                  all its content. Setting 0 gives the browser
-                  permission to clip the box at its flex height.
-
-   overflow-y: auto  Shows a scrollbar only when content exceeds
-                     the clipped height. Has no effect without
-                     the clip boundary that min-height: 0 creates.
-
-   ─────────────────────────────────────────────────────────── */
+/* ── Profile list box ──────────────────────────────────────────── */
 .profile-list-box {
   flex:            1;
   min-height:      0;
@@ -292,7 +262,6 @@ body {
 .profile-list-box::-webkit-scrollbar-thumb       { background: #b0bac8; border-radius: 3px; }
 .profile-list-box::-webkit-scrollbar-thumb:hover { background: #8896a8; }
 
-
 /* ── Individual profile row ──────────────────────────────────── */
 .profile-list-box .profile-item {
   display:       flex;
@@ -304,32 +273,31 @@ body {
   font-weight:   500;
   color:         #1a202c;
   border-bottom: 1px solid #eaeef4;
-  transition:    background 0.12s;
+  transition:    background 0.12s, color 0.12s;
   overflow:      hidden;
   white-space:   nowrap;
   text-overflow: ellipsis;
 }
 
 .profile-list-box .profile-item:last-child { border-bottom: none; }
-.profile-list-box .profile-item:hover      { background: #dce8f6; color: var(--clr-blue); }
+.profile-list-box .profile-item:hover      { background: var(--clr-primary-light); color: var(--clr-primary); }
 .profile-list-box .profile-item.active     { background: var(--clr-list-active); color: var(--clr-list-active-text); font-weight: 600; }
 
-
 /* ── List thumbnail ──────────────────────────────────────────── */
-.profile-item .list-thumb {
+.profile-item .list-thumb,
+.friend-entry .list-thumb {
   width:         38px;
   height:        38px;
   object-fit:    cover;
   border-radius: 50%;
   flex-shrink:   0;
-  border:        2px solid #c8d4e8;
-  background:    #dde3ec;
+  border:        2px solid var(--clr-panel-border);
+  background:    var(--clr-page-bg);
 }
 
 .profile-list-box .profile-item.active .list-thumb {
   border-color: rgba(255, 255, 255, 0.5);
 }
-
 
 /* ── Centre panel: profile hero ──────────────────────────────── */
 .profile-hero {
@@ -345,16 +313,16 @@ body {
   height:        96px;
   object-fit:    cover;
   border-radius: 50%;
-  border:        3px solid var(--clr-blue);
-  background:    #dde3ec;
+  border:        3px solid var(--clr-primary);
+  background:    var(--clr-page-bg);
   flex-shrink:   0;
-  box-shadow:    0 2px 10px rgba(36, 86, 180, 0.20);
+  box-shadow:    0 2px 10px rgba(76, 35, 122, 0.20);
   transition:    transform 0.2s, box-shadow 0.2s;
 }
 
 .profile-thumb:hover {
   transform:  scale(1.05);
-  box-shadow: 0 4px 16px rgba(36, 86, 180, 0.30);
+  box-shadow: 0 4px 16px rgba(76, 35, 122, 0.30);
 }
 
 .profile-hero-name {
@@ -366,7 +334,6 @@ body {
   line-height: 1.25;
 }
 
-
 /* ── Divider ─────────────────────────────────────────────────── */
 .sn-divider {
   border:      none;
@@ -374,7 +341,6 @@ body {
   margin:      0.5rem 0 0.65rem;
   flex-shrink: 0;
 }
-
 
 /* ── Read-only display boxes ─────────────────────────────────── */
 .sn-textbox {
@@ -389,9 +355,6 @@ body {
   flex-shrink:   0;
 }
 
-/* Friends list box — same three-property pattern as .profile-list-box.
-   flex-shrink: 1 overrides the flex-shrink: 0 inherited from .sn-textbox
-   so this box can participate in flex growth. */
 .sn-textbox--tall {
   flex-shrink: 1;
   flex:        1;
@@ -406,17 +369,23 @@ body {
 .sn-textbox--tall::-webkit-scrollbar-thumb       { background: #b0bac8; border-radius: 3px; }
 .sn-textbox--tall::-webkit-scrollbar-thumb:hover { background: #8896a8; }
 
-
 /* ── Friend entries ──────────────────────────────────────────── */
 .sn-textbox .friend-entry {
-  padding:       0.2rem 0;
+  padding:       0.45rem 0; 
   border-bottom: 1px solid #eef0f4;
   font-size:     0.85rem;
   color:         #2d3748;
+  display:       flex;
+  align-items:   center;
+  gap:           0.6rem;
+  transition:    color 0.12s;
 }
 
 .sn-textbox .friend-entry:last-child { border-bottom: none; }
 
+.sn-textbox .friend-entry:hover {
+  color: var(--clr-primary);
+}
 
 /* ── Status bar ──────────────────────────────────────────────── */
 #status-bar {
@@ -433,7 +402,6 @@ body {
   box-shadow:     inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
-
 /* ── Empty state ─────────────────────────────────────────────── */
 .empty-state {
   color:      #9aa5b8;
@@ -442,114 +410,86 @@ body {
   padding:    0.5rem 0.65rem;
 }
 
-
 /* ── Exit button: pinned to panel bottom ─────────────────────── */
 #btn-exit {
   margin-top:  auto;
   flex-shrink: 0;
 }
 
-
 /* ================================================================
    MOBILE  (767px and below)
-   Overrides the desktop height-locked layout with a normal
-   scrolling document. Each rule below targets something set
-   above and explicitly resets it for narrow screens.
    ================================================================ */
 @media (max-width: 767.98px) {
-
-  /* Re-enable normal page scrolling */
   html, body {
     height:   auto;
     overflow: auto;
   }
-
-  /* Remove all fixed-height constraints */
   #app-wrapper,
   #main-content {
     height:   auto;
     overflow: visible;
   }
-
   #main-content > .row {
     height:     auto;
     min-height: 0;
   }
-
-  /* Columns revert to normal block flow */
   #main-content > .row > [class*="col-"] {
     display: block;
     height:  auto;
   }
-
-  /* Panels size to content */
   .sn-panel {
     height:        auto !important;
     min-height:    0;
     overflow:      visible;
     margin-bottom: 0.75rem;
   }
-
-  /* Right panel reverts to normal overflow on mobile */
   .sn-panel.right-panel {
     overflow-y: visible;
   }
-
-  /* Scrollable boxes get capped heights on mobile */
   .profile-list-box {
     flex:       none;
     min-height: 120px;
     max-height: 300px;
     overflow-y: auto;
   }
-
   .sn-textbox--tall {
     flex:       none;
     min-height: 80px;
     max-height: 160px;
     overflow-y: auto;
   }
-
   .profile-hero { flex-direction: column; align-items: flex-start; }
   .btn-row      { flex-wrap: wrap; }
 }
 
-/* ── Upload progress bar ─────────────────────────────────────────
-   Shown while the image is being compressed and sent to Vercel Blob.
-   The bar animates infinitely because we do not receive byte-level
-   progress events from the Fetch API — it signals "busy" rather
-   than a real percentage.
-   ─────────────────────────────────────────────────────────── */
+/* ── Upload progress bar ───────────────────────────────────────── */
 .upload-progress {
   display:        flex;
   align-items:    center;
   gap:            0.6rem;
-  background:     #e8eef8;
+  background:     var(--clr-primary-light);
   border:         1px solid var(--clr-panel-border);
   border-radius:  var(--radius-sm);
   padding:        0.4rem 0.65rem;
   font-size:      0.78rem;
   color:          var(--clr-label);
-  overflow:       hidden;  /* clip the sliding bar inside the container */
+  overflow:       hidden;
 }
  
-/* The animated sliding stripe */
 .upload-progress-bar {
-  width:            40px;   /* width of the visible stripe */
+  width:            40px;
   height:           6px;
   border-radius:    3px;
   background:       linear-gradient(
                       90deg,
                       transparent 0%,
-                      var(--clr-blue) 50%,
+                      var(--clr-primary) 50%,
                       transparent 100%
                     );
   flex-shrink:      0;
-  /* slide-across: defined below, runs forever */
   animation:        slide-across 1.2s ease-in-out infinite;
 }
  
-/* The label text next to the bar */
 #upload-progress-label {
   flex: 1;
   white-space: nowrap;
@@ -557,25 +497,18 @@ body {
   text-overflow: ellipsis;
 }
  
-/* Keyframe: move the bar from left-of-container to right-of-container */
 @keyframes slide-across {
   0%   { transform: translateX(-60px); }
   100% { transform: translateX(200px); }
 }
  
- 
-/* ── File input styling ──────────────────────────────────────────
-   The native <input type="file"> inherits .sn-input but needs a
-   small height adjustment because the browser renders its own
-   "Choose File" button inside it.
-   ─────────────────────────────────────────────────────────── */
+/* ── File input styling ────────────────────────────────────────── */
 input[type="file"].sn-input {
   padding:     0.3rem 0.5rem;
   cursor:      pointer;
   line-height: 1.4;
 }
  
-/* Make the "Choose File" button match our button palette */
 input[type="file"].sn-input::file-selector-button {
   font-family:   var(--font-body);
   font-size:     0.78rem;

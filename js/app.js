@@ -89,7 +89,26 @@ function renderFriendsList(friends) {
   friends.forEach((f) => {
     const div = document.createElement("div");
     div.className   = "friend-entry";
-    div.textContent = f.name;
+
+    // Create the thumbnail image
+    const img = document.createElement("img");
+    img.className = "list-thumb";
+    img.src = f.picture || DEFAULT_AVATAR;
+    img.alt = f.name;
+    // Fallback if the image link is broken
+    img.onerror = () => { img.src = DEFAULT_AVATAR; };
+    
+    // Create the span for the name
+    const span = document.createElement("span");
+    span.textContent = f.name;
+
+    div.appendChild(img);
+    div.appendChild(span);
+
+    // Optional but recommended: make clicking a friend load their profile
+    div.style.cursor = "pointer";
+    div.addEventListener("click", () => selectProfile(f.id));
+    
     box.appendChild(div);
   });
 }
@@ -212,7 +231,7 @@ async function selectProfile(profileId) {
     if (friendIds.length > 0) {
       const { data: nameRows, error: nameError } = await db
         .from("profiles")
-        .select("id, name")
+        .select("id, name, picture")
         .in("id", friendIds)
         .order("name", { ascending: true });
  
